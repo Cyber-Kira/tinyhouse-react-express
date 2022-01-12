@@ -11,11 +11,13 @@
     "mongodb": "^4.3.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
+    "dotenv": "^11.0.0",
     "eslint": "^8.6.0",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",

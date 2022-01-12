@@ -1,9 +1,10 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
+require("dotenv").config();
+
 import express, { Application } from "express";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./graphql/index";
 import { connectDatabase } from "./database";
-
-const port = 9000;
 
 const mount = async (app: Application) => {
   const db = await connectDatabase();
@@ -17,8 +18,8 @@ const mount = async (app: Application) => {
 
   await server.start();
   server.applyMiddleware({ app, path: "/api" });
-  app.listen(port);
-  console.log(`[app]: http://localhost:${port}`);
+  app.listen(process.env.PORT);
+  console.log(`[app]: http://localhost:${process.env.PORT}`);
 };
 
 mount(express());
