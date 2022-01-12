@@ -1,11 +1,16 @@
 import express from "express";
-import ApolloServer from "apollo-server-express";
+import { ApolloServer } from "apollo-server-express";
+import { schema } from "./graphql";
 const app = express();
 const port = 9000;
 
-const server = new ApolloServer();
+const runServer = async () => {
+  const server = new ApolloServer({ schema });
+  await server.start();
+  server.applyMiddleware({ app, path: "/" });
+};
 
-server.applyMiddleware({ app, path: "/" });
+runServer();
 
 app.listen(port);
 
