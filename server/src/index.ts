@@ -11,15 +11,15 @@ const mount = async (app: Application) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: () => {
-      db;
-    },
+    context: () => ({ db }),
   });
 
   await server.start();
   server.applyMiddleware({ app, path: "/api" });
   app.listen(process.env.PORT);
   console.log(`[app]: http://localhost:${process.env.PORT}`);
+
+  console.log(await db.listings.find({}).toArray());
 };
 
 mount(express());
