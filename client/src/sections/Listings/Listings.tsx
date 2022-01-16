@@ -1,13 +1,13 @@
+import { gql } from "apollo-boost";
 import React from "react";
-import { server } from "../../lib/api";
-import { useQuery } from "../../lib/api/useQuery";
+import { Listings as ListingsData } from "./__generated__/Listings";
 import {
-  DeleteListingData,
+  DeleteListing as DeleteListingData,
   DeleteListingVariables,
-  ListingsData,
-} from "./types";
+} from "./__generated__/DeleteListing";
+import { useMutation, useQuery } from "react-apollo";
 
-const LISTINGS = `
+const LISTINGS = gql`
   query Listings {
     listings {
       id
@@ -23,7 +23,7 @@ const LISTINGS = `
   }
 `;
 
-const DELETE_LISTING = `
+const DELETE_LISTING = gql`
   mutation DeleteListing($id: ID!) {
     deleteListing(id: $id) {
       id
@@ -38,14 +38,13 @@ interface Props {
 export const Listings = ({ title }: Props) => {
   const { data, loading, error, refetch } = useQuery<ListingsData>(LISTINGS);
 
-  const deleteListing = async (id: string) => {
-    await server.fetch<DeleteListingData, DeleteListingVariables>({
-      query: DELETE_LISTING,
-      variables: {
-        id,
-      },
-    });
+  const [
+    deleteListing,
+    { loading: deleteListingLoading, error: deleteListingError },
+  ] = useMutation<DeleteListingData, DeleteListingVariables>(DELETE_LISTING);
 
+  const handleDeleteListing = async (id: string) => {
+    await deleteListing({ variables: { id } });
     refetch();
   };
 
@@ -57,7 +56,9 @@ export const Listings = ({ title }: Props) => {
         return (
           <li key={listing.id}>
             {listing.title}{" "}
-            <button onClick={() => deleteListing(listing.id)}>Delete</button>
+            <button onClick={() => handleDeleteListing(listing.id)}>
+              Delete
+            </button>
           </li>
         );
       })}
@@ -72,10 +73,20 @@ export const Listings = ({ title }: Props) => {
     return <h1>Something went wrong :(</h1>;
   }
 
+  const deleteListingLoadMessage = deleteListingLoading ? (
+    <h4>Deletion in progress...</h4>
+  ) : null;
+
+  const deleteListingErrorMessage = deleteListingError ? (
+    <h4>Something went wrong...</h4>
+  ) : null;
+
   return (
     <div>
       <h1>{title}</h1>
       {listingsList}
+      {deleteListingLoadMessage}
+      {deleteListingErrorMessage}
     </div>
   );
 };
