@@ -6,6 +6,9 @@ import {
   DeleteListingVariables,
 } from "./__generated__/DeleteListing";
 import { useMutation, useQuery } from "react-apollo";
+import { Alert, Avatar, Button, List, Spin } from "antd";
+import "./styles/Listings.css";
+import { ListingsSkeleton } from "./components";
 
 const LISTINGS = gql`
   query Listings {
@@ -48,45 +51,64 @@ export const Listings = ({ title }: Props) => {
     refetch();
   };
 
-  const listings = data ? data.listings : null;
+  const listings = data ? data.listings : undefined;
 
   const listingsList = (
-    <ul>
-      {listings?.map((listing) => {
-        return (
-          <li key={listing.id}>
-            {listing.title}{" "}
-            <button onClick={() => handleDeleteListing(listing.id)}>
+    <List
+      itemLayout="horizontal"
+      dataSource={listings}
+      renderItem={(listing) => (
+        <List.Item
+          actions={[
+            <Button
+              type="primary"
+              onClick={() => handleDeleteListing(listing.id)}
+            >
               Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+            </Button>,
+          ]}
+        >
+          <List.Item.Meta
+            title={listing.title}
+            description={listing.address}
+            avatar={<Avatar src={listing.image} shape="square" size={48} />}
+          ></List.Item.Meta>
+        </List.Item>
+      )}
+    ></List>
   );
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="listings">
+        <ListingsSkeleton title={title} />
+      </div>
+    );
   }
 
   if (error) {
-    return <h1>Something went wrong :(</h1>;
+    return (
+      <div className="listings">
+        <ListingsSkeleton title={title} error />
+      </div>
+    );
   }
 
-  const deleteListingLoadMessage = deleteListingLoading ? (
-    <h4>Deletion in progress...</h4>
-  ) : null;
-
-  const deleteListingErrorMessage = deleteListingError ? (
-    <h4>Something went wrong...</h4>
+  const deleteListingErrorAlert = true ? (
+    <Alert
+      type="error"
+      message="Something went wrong, please try again later"
+      className="listings__alert"
+    />
   ) : null;
 
   return (
-    <div>
-      <h1>{title}</h1>
-      {listingsList}
-      {deleteListingLoadMessage}
-      {deleteListingErrorMessage}
+    <div className="listings">
+      <Spin spinning={deleteListingLoading}>
+        {deleteListingErrorAlert}
+        <h1>{title}</h1>
+        {listingsList}
+      </Spin>
     </div>
   );
 };
