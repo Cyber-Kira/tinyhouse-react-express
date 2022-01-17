@@ -94,7 +94,7 @@ export const Listings = ({ title }: Props) => {
     );
   }
 
-  const deleteListingErrorAlert = true ? (
+  const deleteListingErrorAlert = deleteListingError ? (
     <Alert
       type="error"
       message="Something went wrong, please try again later"
