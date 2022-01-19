@@ -48,9 +48,9 @@ export interface User {
   name: string;
   avatar: string;
   contact: string;
-  WalletId?: ObjectId;
-  income: string;
-  booking: ObjectId[];
+  walletId?: string;
+  income: number;
+  bookings: ObjectId[];
   listings: ObjectId[];
 }
 
