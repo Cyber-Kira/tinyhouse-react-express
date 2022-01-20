@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Card, Layout, Spin, Typography } from "antd";
 import { Viewer } from "../../lib/types";
 import { useApolloClient, useMutation } from "react-apollo";
