@@ -3,8 +3,10 @@
   "version": "1.0",
   "dependencies": {
     "@graphql-tools/utils": "^8.6.1",
+    "@types/cookie-parser": "^1.4.2",
     "@types/graphql": "^14.3.1",
     "apollo-server-express": "^2.6.4",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
     "googleapis": "^92.0.0",
     "graphql": "^14.3.1",
