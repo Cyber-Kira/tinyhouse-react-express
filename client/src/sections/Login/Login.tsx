@@ -8,7 +8,7 @@ import {
   LogIn as LogInData,
   LogInVariables,
 } from "../../lib/graphql/mutations/LogIn/__generated__/LogIn";
-import { AuthUrl as AuthUrlData } from "../../lib/graphql/queries/__generated__/AuthUrl";
+import { AuthUrl as AuthUrlData } from "../../lib/graphql/queries/AuthUrl/__generated__/AuthUrl";
 
 // Image Assets
 import googleLogo from "./assets/google_logo.jpg";
