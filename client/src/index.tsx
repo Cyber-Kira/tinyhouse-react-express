@@ -26,6 +26,15 @@ import { AppHeaderSkeleton, ErrorBanner } from "./lib/components";
 
 const client = new ApolloClient({
   uri: "/api",
+  request: async (operation) => {
+    const token = sessionStorage.getItem("token");
+    console.log(token);
+    operation.setContext({
+      headers: {
+        "X-CSRF-TOKEN": token || "",
+      },
+    });
+  },
 });
 
 const initialViewer: Viewer = {
@@ -42,6 +51,12 @@ const App = () => {
   const [logIn, { error }] = useMutation<LogInData, LogInVariables>(LOG_IN, {
     onCompleted: (data) => {
       setViewer(data.logIn);
+
+      if (data.logIn.token) {
+        sessionStorage.setItem("token", data.logIn.token);
+      } else {
+        sessionStorage.removeItem("token");
+      }
     },
   });
 
