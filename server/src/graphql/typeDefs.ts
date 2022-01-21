@@ -19,6 +19,11 @@ export const typeDefs = gql`
     HOUSE
   }
 
+  enum ListingsFilter {
+    PRICE_LOW_TO_HIGH
+    PRICE_HIGH_TO_LOW
+  }
+
   type Listing {
     id: ID!
     title: String!
@@ -47,7 +52,7 @@ export const typeDefs = gql`
     hasWallet: Boolean!
     income: Int
     bookings(limit: Int!, page: Int!): Bookings
-    listings(limit: Int!, page: Int!): Listings!
+    listings(limit: Int!, page: Int!): Listings
   }
 
   type Viewer {
@@ -66,7 +71,9 @@ export const typeDefs = gql`
     authUrl: String!
     user(id: ID!): User!
     listing(id: ID!): Listing!
+    listings(filter: ListingsFilter!, limit: Int!, page: Int!): Listings
   }
+
   type Mutation {
     logIn(input: LogInInput): Viewer!
     logOut: Viewer!
