@@ -26,8 +26,8 @@ export const UserBookings = ({
       grid={{
         gutter: 8,
         xs: 1,
-        sm: 4,
-        lg: 8,
+        sm: 2,
+        lg: 4,
       }}
       dataSource={result ? result : undefined}
       locale={{ emptyText: "You haven't made any bookings!" }}
