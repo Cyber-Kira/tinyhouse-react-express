@@ -16,7 +16,7 @@ interface Props {
 
 const { Text, Title } = Typography;
 
-export const ListingsCard = ({ listing }: Props) => {
+export const ListingCard = ({ listing }: Props) => {
   const { id, title, image, address, price, numOfGuests } = listing;
 
   return (

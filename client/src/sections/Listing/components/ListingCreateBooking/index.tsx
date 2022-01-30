@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Card, DatePicker, Divider, Typography } from "antd";
 import { displayErrorMessage, formatListingPrice } from "../../../../lib/utils";
 import moment, { Moment } from "moment";
-import { ErrorBanner } from "../../../../lib/components";
 
 const { Paragraph, Title } = Typography;
 

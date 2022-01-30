@@ -1,6 +1,6 @@
 import { List, Typography } from "antd";
 import React from "react";
-import { ListingsCard } from "../../../../lib/components";
+import { ListingCard } from "../../../../lib/components";
 import { User } from "../../../../lib/graphql/queries/User/__generated__/User";
 
 interface Props {
@@ -41,7 +41,7 @@ export const UserListings = ({
       }}
       renderItem={(userListing) => (
         <List.Item>
-          <ListingsCard listing={userListing} />
+          <ListingCard listing={userListing} />
         </List.Item>
       )}
     />

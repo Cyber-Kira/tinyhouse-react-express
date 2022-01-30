@@ -29,9 +29,9 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "build": "tsc -p ./",
-    "seed": "ts-node ./temp/seed.ts",
-    "clear": "ts-node ./temp/clear.ts"
+    "start": "npx nodemon src/index.ts",
+    "build": "npx tsc -p ./",
+    "seed": "npx ts-node ./temp/seed.ts",
+    "clear": "npx ts-node ./temp/clear.ts"
   }
 }
