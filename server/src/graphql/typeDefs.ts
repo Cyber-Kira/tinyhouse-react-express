@@ -55,7 +55,7 @@ export const typeDefs = gql`
     hasWallet: Boolean!
     income: Int
     bookings(limit: Int!, page: Int!): Bookings
-    listings(limit: Int!, page: Int!): Listings
+    listings(limit: Int!, page: Int!): Listings!
   }
 
   type Viewer {
@@ -79,7 +79,7 @@ export const typeDefs = gql`
       filter: ListingsFilter!
       limit: Int!
       page: Int!
-    ): Listings
+    ): Listings!
   }
 
   type Mutation {
