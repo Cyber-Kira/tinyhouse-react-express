@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Layout, List, Typography } from "antd";
 import { ListingCard } from "../../lib/components";
@@ -9,6 +9,7 @@ import {
 } from "../../lib/graphql/queries/Listings/__generated__/Listings";
 import { ListingsFilter } from "../../lib/graphql/globalTypes";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { ListingsFilters } from "../../lib/graphql/queries/Listings/components";
 
 interface MatchParams {
   location: string;
@@ -20,10 +21,11 @@ const { Title, Paragraph, Text } = Typography;
 const PAGE_LIMIT = 8;
 
 export const Listings = ({ match }: RouteComponentProps<MatchParams>) => {
+  const [filter, setFilter] = useState(ListingsFilter.PRICE_LOW_TO_HIGH);
   const { data } = useQuery<ListingsData, ListingsVariables>(LISTINGS, {
     variables: {
       location: match.params.location,
-      filter: ListingsFilter.PRICE_LOW_TO_HIGH,
+      filter,
       limit: PAGE_LIMIT,
       page: 1,
     },
@@ -34,20 +36,23 @@ export const Listings = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const listingsSectionElement =
     listings && listings.result.length ? (
-      <List
-        grid={{
-          gutter: 8,
-          xs: 1,
-          sm: 2,
-          lg: 4,
-        }}
-        dataSource={listings.result}
-        renderItem={(listing) => (
-          <List.Item>
-            <ListingCard listing={listing} />
-          </List.Item>
-        )}
-      />
+      <div>
+        <ListingsFilters filter={filter} setFilter={setFilter} />
+        <List
+          grid={{
+            gutter: 8,
+            xs: 1,
+            sm: 2,
+            lg: 4,
+          }}
+          dataSource={listings.result}
+          renderItem={(listing) => (
+            <List.Item>
+              <ListingCard listing={listing} />
+            </List.Item>
+          )}
+        />
+      </div>
     ) : (
       <div>
         <Paragraph>
@@ -63,7 +68,7 @@ export const Listings = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const listingsRegionElement = listingsRegion ? (
     <Title level={3} className="listings__title">
-      Results for: "{listingsRegion}"
+      Results for: "{listingsRegion}" Filter:{" "}
     </Title>
   ) : null;
 
