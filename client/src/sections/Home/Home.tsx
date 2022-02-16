@@ -20,7 +20,7 @@ const PAGE_NUMBER = 4;
 const PAGE_LIMIT = 1;
 
 export const Home = ({ history }: RouteComponentProps) => {
-  const { data, loading, error } = useQuery<ListingsData, ListingsVariables>(
+  const { data, loading } = useQuery<ListingsData, ListingsVariables>(
     LISTINGS,
     {
       variables: {
